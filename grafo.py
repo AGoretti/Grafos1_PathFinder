@@ -1,7 +1,7 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 import random
-from multiprocessing import Process
+import numpy as np
 
 
 listaJ = ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'A', 'J']
@@ -67,17 +67,21 @@ grafo = {'A': set([]),
          'J': set([]),
          }
 
+diff = []
 for node in grafo:
+    diff.append(node)
     ale = random.randint(1, 3)
-    # print(node)
+    print(diff)
     for i in range(ale):
         if node == 'A':
-            grafo[node].add(random.choice(listaA))
+            grafo[node].add(random.choice(np.setdiff1d(listaA, diff)))
         else:
-            grafo[node].add(random.choice(listaJ))
+            grafo[node].add(random.choice(np.setdiff1d(listaJ, diff)))
+    diff.remove(node)        
 
 
 temp = list(shortest_path(grafo, 'A', 'F'))
+
 if temp is None:
     caminhos = []
 else:
